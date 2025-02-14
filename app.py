@@ -10,16 +10,27 @@ generator = load_model()
 
 # Function to generate a recipe
 def generate_recipe(ingredients, meal_type, cuisine):
-    prompt = f"""Create a {cuisine} {meal_type} recipe using {ingredients}. Provide:
-- Ingredients
-- Instructions
-- Serving Size
-- Notes"""
+    prompt = f"""
+    Create a {cuisine} {meal_type} recipe using the following ingredients: {ingredients}.
+    Provide the recipe in the following format:
+
+    **Ingredients:**
+    - [list of ingredients, including amounts]
+
+    **Instructions:**
+    [numbered step-by-step cooking directions]
+
+    **Serving Size:**
+    [number]
+
+    **Notes:**
+    [optional additional cooking tips]
+    """
     
     try:
         recipe = generator(
             prompt,
-            max_length=500,  # Reduced length to prevent hallucinations
+            max_length=600,
             num_return_sequences=1,
             do_sample=True,
             temperature=0.7,
